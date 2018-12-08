@@ -48,6 +48,6 @@ class ServiceDeskApiService
     public function getIncident($id)
     {
         $response = $this->get($this->config->getIncidentUrl() . "?id=$id");
-        return $response->requestIds;
+        return $response;
     }
 }
