@@ -47,7 +47,7 @@ class ApiController extends Controller
 
             Search::store($helpDeskId, $textToSearch);
 
-            $incidents = $this->getAllIncidents($helpDeskId);
+            $incidents = $this->apiService->getAllIncidents($helpDeskId);
             return $this->filterIncidentsByText($incidents, $textToSearch);
         });
 
@@ -80,19 +80,6 @@ class ApiController extends Controller
             ->limit(5);
 
         return SearchResource::collection($query->get());
-    }
-
-    private function getAllIncidents($helpDeskId)
-    {
-        $incidents = [];
-
-        $incidentsIds = $this->apiService->getIncidentsForHelpDesk($helpDeskId);
-
-        foreach ($incidentsIds as $id) {
-            $incidents[] = $this->apiService->getIncident($id);
-        }
-
-        return $incidents;
     }
 
     private function filterIncidentsByText($incidents, $text)

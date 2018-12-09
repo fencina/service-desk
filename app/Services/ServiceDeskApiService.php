@@ -50,4 +50,17 @@ class ServiceDeskApiService
         $response = $this->get($this->config->getIncidentUrl() . "?id=$id");
         return $response;
     }
+
+    public function getAllIncidents($helpDeskId)
+    {
+        $incidents = [];
+
+        $incidentsIds = $this->getIncidentsForHelpDesk($helpDeskId);
+
+        foreach ($incidentsIds as $id) {
+            $incidents[] = $this->getIncident($id);
+        }
+
+        return $incidents;
+    }
 }
