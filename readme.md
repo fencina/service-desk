@@ -39,6 +39,10 @@ Once configured, step into root directory and run this commands:
 ## Run
 
 Set up your favourite web server and visit root page or hit api endpoints.
+If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at http://localhost:8000:
+```
+php artisan serve
+```
 For endpoints documentation, import `Service Desk.postman_collection.json` file into Postman.
 
 
