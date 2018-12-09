@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "1d7e69b4-5758-42de-abe0-20fe224fa131",
+		"name": "Service Desk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getIncidentsForHelpDesk",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/getIncidentsForHelpDesk?helpdesk_id=11&text_to_search=laptop&detailed=1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"getIncidentsForHelpDesk"
+					],
+					"query": [
+						{
+							"key": "helpdesk_id",
+							"value": "11"
+						},
+						{
+							"key": "text_to_search",
+							"value": "laptop"
+						},
+						{
+							"key": "detailed",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Get incidents for a help desk, filtered by a text in their description."
+			},
+			"response": []
+		},
+		{
+			"name": "getMostSearchedTexts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/getMostSearchedTexts?helpdesk_id=11",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"getMostSearchedTexts"
+					],
+					"query": [
+						{
+							"key": "helpdesk_id",
+							"value": "11"
+						}
+					]
+				},
+				"description": "Get most searched texts"
+			},
+			"response": []
+		}
+	]
+}
