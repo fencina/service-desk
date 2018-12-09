@@ -66,7 +66,7 @@ class ApiController extends Controller
             ]);
         }
 
-        $helpDeskId = $request->query('help_desk_id') ?? null;
+        $helpDeskId = $request->query('helpdesk_id') ?? null;
 
         $query = Search::query();
 
@@ -74,7 +74,12 @@ class ApiController extends Controller
             $query->where('help_desk_id', $helpDeskId);
         }
 
-        return SearchResource::collection($query->orderByDesc('count')->limit(5)->get());
+        $query->selectRaw('text, SUM(count) as count')
+            ->orderByDesc('count')
+            ->groupBy('text')
+            ->limit(5);
+
+        return SearchResource::collection($query->get());
     }
 
     private function getAllIncidents($helpDeskId)
