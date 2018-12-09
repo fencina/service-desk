@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DetailedIncident;
 use App\Http\Resources\SimpleIncident;
+use App\Search;
 use App\Services\ServiceDeskApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
@@ -40,8 +42,13 @@ class ApiController extends Controller
         $detailed = $request->query('detailed');
 
 
-        $incidents = $this->getAllIncidents($helpDeskId);
-        $incidents = $this->filterIncidentsByText($incidents, $textToSearch);
+        $incidents = DB::transaction(function () use ($helpDeskId, $textToSearch) {
+
+            Search::store($helpDeskId, $textToSearch);
+
+            $incidents = $this->getAllIncidents($helpDeskId);
+            return $this->filterIncidentsByText($incidents, $textToSearch);
+        });
 
         return $detailed ? DetailedIncident::collection(collect($incidents)) : SimpleIncident::collection(collect($incidents));
     }
