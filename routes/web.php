@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['uses' => 'Controller@index']);
+Route::get('/getIncidents', ['uses' => 'Controller@get']);
