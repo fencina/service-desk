@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::get('getIncidentsForHelpDesk', ['uses' => 'ApiController@getIncidentsForHelpDesk']);
+Route::get('getMostSearchedTexts', ['uses' => 'ApiController@getMostSearchedTexts']);

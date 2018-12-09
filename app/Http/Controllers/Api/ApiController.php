@@ -10,6 +10,7 @@ use App\Services\ServiceDeskApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Search as SearchResource;
 
 class ApiController extends Controller
 {
@@ -51,6 +52,29 @@ class ApiController extends Controller
         });
 
         return $detailed ? DetailedIncident::collection(collect($incidents)) : SimpleIncident::collection(collect($incidents));
+    }
+
+    public function getMostSearchedTexts(Request $request)
+    {
+        $validator = Validator::make($request->query(), [
+            'helpdesk_id' => 'nullable|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $helpDeskId = $request->query('help_desk_id') ?? null;
+
+        $query = Search::query();
+
+        if ($helpDeskId) {
+            $query->where('help_desk_id', $helpDeskId);
+        }
+
+        return SearchResource::collection($query->orderByDesc('count')->limit(5)->get());
     }
 
     private function getAllIncidents($helpDeskId)
