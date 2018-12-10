@@ -17,7 +17,7 @@ in root directory.
 
 - cp .env.example .env
 
-Configure the next .env variables
+You must create a mysql DB and configure the next .env variables
 
 ```
 DB_HOST=
